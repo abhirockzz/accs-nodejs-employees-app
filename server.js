@@ -8,6 +8,8 @@ app.use(bodyParser.json({ type: '*/*' }));
 app.use(express.static('public'));
 var router = express.Router();
 
+
+
 var listEmployees = [];
 
 try {
@@ -26,6 +28,11 @@ router.use(function (request, response, next) {
   next();
 });
 
+//DB details
+router.route('/dbinfo').get(function (request, response) {
+   var dbConnectDesc = process.env.DBAAS_DEFAULT_CONNECT_DESCRIPTOR || 'Please configure service binding'; 
+   response.json(dbConnectDesc).end();  
+});
 
 // GET
 router.route('/:id').get(function (request, response) {
